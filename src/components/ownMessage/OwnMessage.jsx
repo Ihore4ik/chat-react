@@ -1,11 +1,13 @@
 import React from "react";
 import styles from "./OwnMessage.module.css"
 
-const OwnMessage = ({message, getDate, deleteMessage}) => {
+const OwnMessage = ({message, getDate, deleteMessage, editMessage}) => {
     return (
         <div className={styles["own-message"]}>
             <div className={styles["own-message_events"]}>
-                <button className={styles["message-edit"]}>Edit</button>
+                <button className={styles["message-edit"]}
+                   onClick={editMessage}
+                >Edit</button>
                 <button
                     className={styles["message-delete"]}
                     onClick={deleteMessage}

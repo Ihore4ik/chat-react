@@ -17,9 +17,10 @@ const Chat = ({url}) => {
         const likeEl = event.target.classList;
         likeEl.contains("active") ? likeEl.remove("active") : likeEl.add("active");
     };
+
     const createMessage = (event) => {
         event.preventDefault();
-        const myMessage = {
+      const  myMessage = {
             "id": Date.now(),
             "userId": "Me1990",
             "myOwn": true,
@@ -28,7 +29,9 @@ const Chat = ({url}) => {
             "createdAt": new Date().toISOString(),
             "editedAt": ""
         };
-        messages.push(myMessage);
+        const newMessages = [...messages];
+        newMessages.push(myMessage);
+        setMessages(newMessages);
         setInputValue('');
     };
     const getDate = (time) => {
@@ -44,9 +47,14 @@ const Chat = ({url}) => {
     };
     const lastMessage = getDate(getLastMessage(messages));
     const deleteMessage = (id) => {
-        const newMessages = messages.filter(message=> message.id !== id)
+        const newMessages = messages.filter(message => message.id !== id);
         setMessages(newMessages);
-    }
+
+    };
+    const editMessage = (id) => {
+        const updatedMessage = messages.filter(message => message.id === id);
+        setInputValue(updatedMessage[0].text);
+    };
 
     useEffect(() => {
         fetch(url)
@@ -67,6 +75,7 @@ const Chat = ({url}) => {
                     <MessageList messages={messages}
                                  deleteMessage={deleteMessage}
                                  getDate={getDate}
+                                 editMessage={editMessage}
                                  onLike={onLike}/>
 
                     <MessageInput value={inputValue}

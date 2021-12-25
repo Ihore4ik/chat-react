@@ -1,2 +1,4 @@
 .message-list{}
-.messages-divider{}
+.messages-divider{
+    border-bottom: 2px solid red;
+}

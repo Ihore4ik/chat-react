@@ -16,6 +16,9 @@
     flex-direction: column;
     justify-content: space-between;
 }
+.message-text{
+    word-break: break-all;
+}
 .message-time,.message-like{
     align-self: flex-end;
 }
