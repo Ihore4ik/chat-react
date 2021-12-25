@@ -19,3 +19,6 @@
 .message-time,.message-like{
     align-self: flex-end;
 }
+.message-like{
+    cursor: pointer;
+}

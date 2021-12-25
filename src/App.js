@@ -1,13 +1,11 @@
-
-import './App.css';
+import React from "react";
 import Chat from "./components/chat/Chat";
-
-const api_url = "https://edikdolynskyi.github.io/react_sources/messages.json";
+import './App.css';
 
 function App() {
   return (
     <div className="App">
-         <Chat url={api_url}/>
+         <Chat url="https://edikdolynskyi.github.io/react_sources/messages.json"/>
     </div>
   );
 }

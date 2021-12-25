@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./Message.module.css"
 
-const Message = ({message,getDate}) => {
+const Message = ({message,getDate,onLike}) => {
     return (
         <div className={styles.message}>
             <div className={styles["message-info"]}>
@@ -19,8 +19,11 @@ const Message = ({message,getDate}) => {
                 <div className={styles["message-text"]}>
                     {message.text}
                 </div>
-                <div className={styles["message-like"]}>
-                    10
+                <div
+                    className={styles["message-like"]}
+                    onClick={(event => onLike(event))}
+                >
+                    like
                 </div>
             </div>
         </div>

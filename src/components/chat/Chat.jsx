@@ -2,18 +2,21 @@ import React, {useState, useEffect} from "react";
 import Header from "../header/Header";
 import MessageList from "../messageList/MessageList";
 import Preloader from "../preloader/Preloader";
-import styles from "./Chat.module.css";
 import MessageInput from "../messageInput/MessageInput";
+import styles from "./Chat.module.css";
 
 const Chat = ({url}) => {
     const [messages, setMessages] = useState([]);
-    const [myMessage, setMyMessages] = useState(null);
     const [inputValue, setInputValue] = useState('');
     const messagesCount = messages.length;
     const usersAll = [...new Set(messages.map(message => message.userId))].length;
     const [isLoaded, setIsLoaded] = useState(false);
 
 
+    const onLike = (event) => {
+        const likeEl = event.target.classList;
+        likeEl.contains("active") ? likeEl.remove("active") : likeEl.add("active");
+    };
     const createMessage = (event) => {
         event.preventDefault();
         const myMessage = {
@@ -24,7 +27,7 @@ const Chat = ({url}) => {
             "text": inputValue,
             "createdAt": new Date().toISOString(),
             "editedAt": ""
-        }
+        };
         messages.push(myMessage);
         setInputValue('');
     };
@@ -39,8 +42,11 @@ const Chat = ({url}) => {
         });
         return Math.max(...arr.map(date => new Date(date).getTime()));
     };
-
     const lastMessage = getDate(getLastMessage(messages));
+    const deleteMessage = (id) => {
+        const newMessages = messages.filter(message=> message.id !== id)
+        setMessages(newMessages);
+    }
 
     useEffect(() => {
         fetch(url)
@@ -58,7 +64,10 @@ const Chat = ({url}) => {
                         usersAll={usersAll}
                         lastMessage={lastMessage}/>
                 <main className={styles.main}>
-                    <MessageList messages={messages} getDate={getDate}/>
+                    <MessageList messages={messages}
+                                 deleteMessage={deleteMessage}
+                                 getDate={getDate}
+                                 onLike={onLike}/>
 
                     <MessageInput value={inputValue}
                                   createMessage={createMessage}
