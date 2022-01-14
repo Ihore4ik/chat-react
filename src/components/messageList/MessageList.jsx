@@ -2,9 +2,11 @@ import React from "react";
 import styles from "./MessageList.module.css";
 import Message from "../message/Message";
 import OwnMessage from "../ownMessage/OwnMessage";
+import {useSelector} from "react-redux";
 
 
-const MessageList = ({messages, getDate, onLike, deleteMessage, editMessage}) => {
+const MessageList = ({ getDate, onLike, deleteMessage, editMessage}) => {
+    const messages = useSelector(state=> state.chat.messages);
     const setDataToDivider = (time) => {
         const d = new Date(time)
         const options = {
