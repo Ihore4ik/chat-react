@@ -5,7 +5,7 @@ import OwnMessage from "../ownMessage/OwnMessage";
 import {useSelector} from "react-redux";
 
 
-const MessageList = ({ getDate, onLike, deleteMessage, editMessage}) => {
+const MessageList = ({ getDate, onLike, editMessage}) => {
     const messages = useSelector(state=> state.chat.messages);
     const setDataToDivider = (time) => {
         const d = new Date(time)
@@ -41,7 +41,6 @@ const MessageList = ({ getDate, onLike, deleteMessage, editMessage}) => {
                                     if (message.hasOwnProperty("myOwn"))
                                         return <OwnMessage getDate={getDate}
                                                            editMessage={() => editMessage(message.id)}
-                                                           deleteMessage={() => deleteMessage(message.id)}
                                                            message={message}
                                                            key={message.id}/>;
 

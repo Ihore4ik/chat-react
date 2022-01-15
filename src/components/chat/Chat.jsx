@@ -6,17 +6,15 @@ import MessageInput from "../messageInput/MessageInput";
 import styles from "./Chat.module.css";
 import {useDispatch, useSelector} from "react-redux";
 import {createMessage, fetchMessages} from "../../redux/chatSlice";
-// import preloader from "../preloader/Preloader";
+import Modal from "../modal/Modal";
 
 const Chat = ({url}) => {
-    const {preloader, error} = useSelector(state => state.chat);
+    const {preloader, error,messages} = useSelector(state => state.chat);
     const dispatch = useDispatch();
-    const [messages, setMessages] = useState([]);
     const [inputValue, setInputValue] = useState('');
     const messagesCount = messages.length;
     const usersAll = [...new Set(messages.map(message => message.userId))].length;
 
-    console.log(error)
     const onLike = (event) => {
         const likeEl = event.target.classList;
         likeEl.contains("active") ? likeEl.remove("active") : likeEl.add("active");
@@ -24,20 +22,9 @@ const Chat = ({url}) => {
 
     const handleCreateMessage = (event) => {
         event.preventDefault();
-        dispatch(createMessage({inputValue}));
-        // const  myMessage = {
-        //       "id": Date.now(),
-        //       "userId": "Me1990",
-        //       "myOwn": true,
-        //       "user": "Me",
-        //       "text": inputValue,
-        //       "createdAt": new Date().toISOString(),
-        //       "editedAt": ""
-        //   };
-        //   const newMessages = [...messages];
-        //   newMessages.push(myMessage);
-        //   setMessages(newMessages);
-        debugger
+        if(inputValue.trim()){
+            dispatch(createMessage(inputValue));
+        }
         setInputValue('');
     };
     const getDate = (time) => {
@@ -52,18 +39,11 @@ const Chat = ({url}) => {
         return Math.max(...arr.map(date => new Date(date).getTime()));
     };
     const lastMessage = getDate(getLastMessage(messages));
-    const deleteMessage = (id) => {
-        const newMessages = messages.filter(message => message.id !== id);
-        setMessages(newMessages);
 
-    };
-    const editMessage = (id) => {
-        const updatedMessage = messages.filter(message => message.id === id);
-        setInputValue(updatedMessage[0].text);
-    };
 
     useEffect(() => {
-        dispatch(fetchMessages({url}))
+        dispatch(fetchMessages({url}));
+
     }, []);
 
     return (
@@ -74,17 +54,14 @@ const Chat = ({url}) => {
                         lastMessage={lastMessage}/>
                 <main className={styles.main}>
                     {error && <h2 className={styles.error}>An error occured: {error}</h2>}
-                    <MessageList messages={messages}
-                                 deleteMessage={deleteMessage}
-                                 getDate={getDate}
-                                 editMessage={editMessage}
+                    <MessageList getDate={getDate}
                                  onLike={onLike}/>
 
                     <MessageInput value={inputValue}
                                   createMessage={handleCreateMessage}
                                   setInputValue={setInputValue}/>
                 </main>
-
+                <Modal/>
             </div>
         ) : <Preloader/>
     );

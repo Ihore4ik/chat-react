@@ -1,11 +1,9 @@
 import React from "react";
 import styles from "./MessageInput.module.css"
-// import {useDispatch} from "react-redux";
 
-const MessageInput = ({value, setInputValue, handleCreateMessage}) => {
-
+const MessageInput = ({value, setInputValue, createMessage}) => {
     return (
-        <form onSubmit={(event) => handleCreateMessage(event)}
+        <form onSubmit={(event) => createMessage(event)}
               className={styles["message-input"]}>
             <input
                 className={styles["message-input-text"]}

@@ -1,0 +1,40 @@
+.dit-message-modal{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100vw;
+    background: rgba(0,0,0,0.6);
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+.modal-shown{
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+    border-radius: 15px;
+    background: #ffffff;
+    width: 40%;
+    height: 30%;
+}
+.edit-message-input{
+    width: 100%;
+    height: 50%;
+    padding: 5px;
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+.edit-message-buttons{
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+}
+.edit-message-button{
+    padding: 10px;
+    text-transform: uppercase;
+}
+.edit-message-close{
+    text-transform: uppercase;
+    padding: 10px;
+}

@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import chatReducer from "./chatSlice"
+import headerReducer from "./headerSlice";
 
  const store = configureStore({
     reducer: {
-        chat: chatReducer,
+        chat: chatReducer
+        // header: headerReducer,
     },
 });
 
