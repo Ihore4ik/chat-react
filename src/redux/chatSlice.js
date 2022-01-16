@@ -42,7 +42,11 @@ const chatSlice = createSlice({
         },
         addNewUser(state,action){
             state.users.push(action.payload);
+        },
+        deleteUser(state,action) {
+            state.users = state.users.filter(user => user.id !== action.payload);
         }
+
     },
     extraReducers: {
         [fetchMessages.pending]: (state) => {
@@ -76,7 +80,7 @@ const chatSlice = createSlice({
 })
 
 export const {
-    createMessage, deleteMessage, editMessage,
+    createMessage, deleteMessage, editMessage,deleteUser,
     closeModal, openModal, addMessageId,addNewUser
 } = chatSlice.actions;
 export default chatSlice.reducer;

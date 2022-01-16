@@ -1,7 +1,11 @@
 import React from "react";
 import styles from "./Users.module.css";
+import {fetchDeleteUser} from "../../redux/fetchUsers";
+import {useDispatch} from "react-redux";
 
-const User = ({user}) => {
+const User = ({token,user}) => {
+    const dispatch = useDispatch();
+    const {id} = user;
     return (
         <li className={styles.user}>
             <span className={styles["user-info"]}>
@@ -10,7 +14,7 @@ const User = ({user}) => {
             </span>
             <span className={styles["user-btn"]}>
                 <button>Edit</button>
-                <button>Delete</button>
+                <button onClick={()=>dispatch(fetchDeleteUser({token, id}))}>Delete</button>
             </span>
         </li>
     )

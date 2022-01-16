@@ -1,5 +1,5 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
-import {addNewUser} from "./chatSlice";
+import {addNewUser, deleteUser} from "./chatSlice";
 
 
 export const fetchUsers = createAsyncThunk(
@@ -40,6 +40,28 @@ export const fetchAddUser = createAsyncThunk(
             }
             const user = await response.json();
             dispatch(addNewUser(user));
+        } catch (error) {
+            return rejectWithValue(error.message);
+        }
+
+    }
+)
+
+export const fetchDeleteUser = createAsyncThunk(
+    'chatState/fetchDeleteUser',
+    async ({token, id}, {rejectWithValue, dispatch}) => {
+        try {
+            const response = await fetch(`https://bsa-chat.azurewebsites.net/api/Users/${id}`, {
+                method: "DELETE",
+                headers: {
+                    'accept': '*/*',
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            if (!response.ok) {
+                throw new Error("Wrong url!");
+            }
+            dispatch(deleteUser(id));
         } catch (error) {
             return rejectWithValue(error.message);
         }

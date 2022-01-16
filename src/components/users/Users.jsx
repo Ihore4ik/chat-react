@@ -25,7 +25,7 @@ const Users = () => {
             <ul className={styles["users-content"]}>
                 {
                     users && users.map(user=>{
-                       return <User user={user} key={user.id}/>
+                       return <User token={token} user={user} key={user.id}/>
                     })
                 }
             </ul>
