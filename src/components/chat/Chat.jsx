@@ -9,7 +9,8 @@ import {createMessage, fetchMessages} from "../../redux/chatSlice";
 import Modal from "../modal/Modal";
 
 const Chat = ({url}) => {
-    const {preloader, error,messages} = useSelector(state => state.chat);
+    const {preloader, error, messages, authUser} = useSelector(state => state.chat);
+    const {token} = authUser;
     const dispatch = useDispatch();
     const [inputValue, setInputValue] = useState('');
     const messagesCount = messages.length;
@@ -22,7 +23,7 @@ const Chat = ({url}) => {
 
     const handleCreateMessage = (event) => {
         event.preventDefault();
-        if(inputValue.trim()){
+        if (inputValue.trim()) {
             dispatch(createMessage(inputValue));
         }
         setInputValue('');
@@ -42,28 +43,28 @@ const Chat = ({url}) => {
 
 
     useEffect(() => {
-        dispatch(fetchMessages({url}));
+        dispatch(fetchMessages({url, token}));
 
     }, []);
 
     return (
-        !preloader ? (
-            <div className={styles.chat}>
-                <Header messagesCount={messagesCount}
-                        usersAll={usersAll}
-                        lastMessage={lastMessage}/>
-                <main className={styles.main}>
-                    {error && <h2 className={styles.error}>An error occured: {error}</h2>}
-                    <MessageList getDate={getDate}
-                                 onLike={onLike}/>
+            !preloader ? (
+                <div className={styles.chat}>
+                    <Header messagesCount={messagesCount}
+                            usersAll={usersAll}
+                            lastMessage={lastMessage}/>
+                    <main className={styles.main}>
+                        {error && <h2 className={styles.error}>An error occured: {error}</h2>}
+                        <MessageList getDate={getDate}
+                                     onLike={onLike}/>
 
-                    <MessageInput value={inputValue}
-                                  createMessage={handleCreateMessage}
-                                  setInputValue={setInputValue}/>
-                </main>
-                <Modal/>
-            </div>
-        ) : <Preloader/>
+                        <MessageInput value={inputValue}
+                                      createMessage={handleCreateMessage}
+                                      setInputValue={setInputValue}/>
+                    </main>
+                    <Modal/>
+                </div>
+            ) : <Preloader/>
     );
 
 };
