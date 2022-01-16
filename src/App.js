@@ -6,15 +6,20 @@ import IsAuth from "./components/isAuth/IsAuth";
 import './App.css';
 import Users from "./components/users/Users";
 import IsAuthAdmin from "./components/isAuth/IsAuthAdmin";
+import styles from "./components/chat/Chat.module.css";
+import {useSelector} from "react-redux";
 
 function App() {
+    const {error} = useSelector(state=>state.chat);
     return (
         <div className="App">
+
             <header className="header">
                 <Link to="/login">Login</Link>
                 <Link to="/">Chat</Link>
                 <Link to="/users">Users</Link>
             </header>
+            {error && <h2 className={styles.error}>An error occured: {error}</h2>}
             <Routes>
                 <Route path="/" element={
                     <IsAuth>

@@ -5,11 +5,11 @@ import Preloader from "../preloader/Preloader";
 import MessageInput from "../messageInput/MessageInput";
 import styles from "./Chat.module.css";
 import {useDispatch, useSelector} from "react-redux";
-import { fetchMessages, fetchOwnMessage} from "../../redux/chatSlice";
+import { fetchMessages, fetchOwnMessage} from "../../redux/asyncFunc";
 import Modal from "../modal/Modal";
 
 const Chat = ({url}) => {
-    const {preloader, error, messages, authUser} = useSelector(state => state.chat);
+    const {preloader, messages, authUser} = useSelector(state => state.chat);
     const {token} = authUser;
     const dispatch = useDispatch();
     const [inputValue, setInputValue] = useState('');
@@ -24,17 +24,7 @@ const Chat = ({url}) => {
     const handleCreateMessage = (event) => {
         event.preventDefault();
         if (inputValue.trim()) {
-            const message = {
-                "id": Date.now(),
-                "userId": "Me1990",
-                "myOwn": true,
-                "user": "Me",
-                "text": inputValue,
-                "createdAt": new Date().toISOString(),
-                "editedAt": "",
-                "liked": false
-            }
-            dispatch(fetchOwnMessage({token,message}));
+            dispatch(fetchOwnMessage({token,inputValue}));
         }
         setInputValue('');
     };
@@ -64,11 +54,10 @@ const Chat = ({url}) => {
                             usersAll={usersAll}
                             lastMessage={lastMessage}/>
                     <main className={styles.main}>
-                        {error && <h2 className={styles.error}>An error occured: {error}</h2>}
                         <MessageList getDate={getDate}
                                      onLike={onLike}/>
                         <MessageInput value={inputValue}
-                                      createMessage={(event)=>handleCreateMessage(event)}
+                                      createMessage={handleCreateMessage}
                                       setInputValue={setInputValue}/>
                     </main>
                     <Modal/>

@@ -2,23 +2,17 @@ import React, {useState} from "react";
 
 import styles from "./Modal.module.css";
 import {useSelector, useDispatch} from "react-redux";
-import {closeModal, editMessage} from "../../redux/chatSlice";
+import {closeModal} from "../../redux/chatSlice";
+import {fetchUpdateMessage} from "../../redux/asyncFunc";
 
 
 function Modal() {
-    const {editModal,messages,editedMessageId} = useSelector(state => state.chat);
+    const {editModal,editedMessageId,authUser} = useSelector(state => state.chat);
+    const {token} = authUser;
     const [text, setText] = useState("");
     const dispatch = useDispatch();
     const handleEditMessage = () => {
-        const newM = messages.find(item=> item.id === editedMessageId);
-        const clone = {};
-        for (let key in newM) {
-            clone[key] = newM[key];
-        }
-        console.log(clone,"clone")
-        clone.editedAt = new Date().toISOString();
-        clone.text = text;
-        dispatch(editMessage(clone));
+        dispatch(fetchUpdateMessage({token,editedMessageId,text}));
         dispatch(closeModal())
         setText("");
     }

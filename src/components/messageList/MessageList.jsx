@@ -40,6 +40,7 @@ const MessageList = ({ getDate, onLike, editMessage}) => {
                                 el.map(message => {
                                     if (message.userId === authUser.id)
                                         return <OwnMessage getDate={getDate}
+                                                           token={authUser.token}
                                                            editMessage={() => editMessage(message.id)}
                                                            message={message}
                                                            key={message.id}/>;

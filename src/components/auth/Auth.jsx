@@ -1,5 +1,5 @@
 import React from "react";
-import {fetchAuthUser} from "../../redux/chatSlice";
+import {fetchAuthUser} from "../../redux/asyncFunc";
 import {useDispatch} from "react-redux";
 import styles from"./Auth.module.css";
 

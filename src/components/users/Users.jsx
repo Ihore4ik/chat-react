@@ -2,7 +2,7 @@ import React, {useEffect} from "react";
 import styles from "./Users.module.css";
 import {useSelector,useDispatch} from "react-redux";
 import User from "./User";
-import { fetchUsers} from "../../redux/chatSlice";
+import { fetchUsers} from "../../redux/asyncFunc";
 
 const Users = () => {
     const {users,authUser} = useSelector(state=>state.chat);
