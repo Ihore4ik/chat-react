@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import chatReducer from "./chatSlice"
-import headerReducer from "./asyncFunc";
+import headerReducer from "./fetchMessages";
 
  const store = configureStore({
     reducer: {

@@ -1,5 +1,7 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {fetchMessages,fetchUsers,fetchAuthUser} from "./asyncFunc";
+import {fetchMessages} from "./fetchMessages";
+import {fetchUsers} from "./fetchUsers";
+import {fetchAuthUser} from "./fetchAuth";
 
 
 const chatSlice = createSlice({
@@ -38,6 +40,9 @@ const chatSlice = createSlice({
             });
             state.editedMessageId = null;
         },
+        addNewUser(state,action){
+            state.users.push(action.payload);
+        }
     },
     extraReducers: {
         [fetchMessages.pending]: (state) => {
@@ -71,6 +76,7 @@ const chatSlice = createSlice({
 })
 
 export const {
-    createMessage, deleteMessage, editMessage, closeModal, openModal, addMessageId
+    createMessage, deleteMessage, editMessage,
+    closeModal, openModal, addMessageId,addNewUser
 } = chatSlice.actions;
 export default chatSlice.reducer;

@@ -1,5 +1,5 @@
 import React from "react";
-import {fetchAuthUser} from "../../redux/asyncFunc";
+import {fetchAuthUser} from "../../redux/fetchAuth";
 import {useDispatch} from "react-redux";
 import styles from"./Auth.module.css";
 

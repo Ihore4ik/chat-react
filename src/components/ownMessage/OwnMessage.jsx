@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./OwnMessage.module.css"
 import { addMessageId, openModal} from "../../redux/chatSlice";
 import {useDispatch} from "react-redux";
-import {fetchDeleteMessage} from "../../redux/asyncFunc";
+import {fetchDeleteMessage} from "../../redux/fetchMessages";
 
 const OwnMessage = ({message, getDate,token}) => {
     const {id} = message;

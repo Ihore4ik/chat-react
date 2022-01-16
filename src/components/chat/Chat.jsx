@@ -5,8 +5,9 @@ import Preloader from "../preloader/Preloader";
 import MessageInput from "../messageInput/MessageInput";
 import styles from "./Chat.module.css";
 import {useDispatch, useSelector} from "react-redux";
-import { fetchMessages, fetchOwnMessage} from "../../redux/asyncFunc";
+import { fetchMessages, fetchOwnMessage} from "../../redux/fetchMessages";
 import Modal from "../modal/Modal";
+import ChildrenModal from "../modal/ChildrenModal";
 
 const Chat = ({url}) => {
     const {preloader, messages, authUser} = useSelector(state => state.chat);
@@ -60,7 +61,7 @@ const Chat = ({url}) => {
                                       createMessage={handleCreateMessage}
                                       setInputValue={setInputValue}/>
                     </main>
-                    <Modal/>
+                    <Modal children={<ChildrenModal/>}/>
                 </div>
             ) : <Preloader/>
     );
