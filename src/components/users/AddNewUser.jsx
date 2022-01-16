@@ -1,11 +1,12 @@
 import React from "react";
 import {useDispatch, useSelector} from "react-redux";
 import styles from "./AddNewUser.module.css";
-import {fetchAddUser} from "../../redux/fetchUsers";
+import {fetchAddUser, fetchUpdateUser} from "../../redux/fetchUsers";
 import {closeModal} from "../../redux/chatSlice";
 
 const AddNewUser = () => {
     const {token} = useSelector(state => state.chat.authUser);
+    const {editedUserId} = useSelector(state => state.chat);
     const dispatch = useDispatch();
 
     const handleSubmit = (event) => {
@@ -16,8 +17,12 @@ const AddNewUser = () => {
             user[entry[0]] = entry[1]
         }
         const {name, email, password, avatar} = user;
+        if(editedUserId){
+            dispatch(fetchUpdateUser({token, editedUserId, name, email, password, avatar}));
+        }else{
+            dispatch(fetchAddUser({token, name, email, password, avatar}));
+        }
 
-        dispatch(fetchAddUser({token, name, email, password, avatar}));
         dispatch(closeModal());
     }
     const handleCloseModal = (event) => {

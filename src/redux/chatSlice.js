@@ -13,7 +13,8 @@ const chatSlice = createSlice({
         error: null,
         editedMessageId: null,
         authUser: null,
-        users: null
+        users: null,
+        editedUserId: null
     },
     reducers: {
         createMessage(state, action) {
@@ -43,8 +44,22 @@ const chatSlice = createSlice({
         addNewUser(state,action){
             state.users.push(action.payload);
         },
+        addEditUser(state,action){
+            state.editedUserId = action.payload;
+        },
         deleteUser(state,action) {
             state.users = state.users.filter(user => user.id !== action.payload);
+        },
+        updateUser(state,action){
+            state.users = state.users.map(item => {
+                if (item.id === action.payload.id) {
+                    return action.payload;
+                }
+                return item;
+            })
+            state.editedUserId = null;
+        },logoutUser(state){
+            state.authUser = null;
         }
 
     },
@@ -80,7 +95,7 @@ const chatSlice = createSlice({
 })
 
 export const {
-    createMessage, deleteMessage, editMessage,deleteUser,
-    closeModal, openModal, addMessageId,addNewUser
+    createMessage, deleteMessage, editMessage,deleteUser,addEditUser,
+    closeModal, openModal, addMessageId,addNewUser,updateUser,logoutUser
 } = chatSlice.actions;
 export default chatSlice.reducer;
