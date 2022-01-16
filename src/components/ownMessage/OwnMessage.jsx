@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./OwnMessage.module.css"
-import {deleteMessage, addMessageId,openModal} from "../../redux/chatSlice";
+import { addMessageId, openModal, fetchDeleteMessage} from "../../redux/chatSlice";
 import {useDispatch} from "react-redux";
 
 const OwnMessage = ({message, getDate}) => {
@@ -17,7 +17,7 @@ const OwnMessage = ({message, getDate}) => {
                 >Edit</button>
                 <button
                     className={styles["message-delete"]}
-                    onClick={()=>dispatch(deleteMessage(message.id))}
+                    onClick={()=>dispatch(fetchDeleteMessage(message.id))}
                 >Delete
                 </button>
             </div>

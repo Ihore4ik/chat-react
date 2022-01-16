@@ -6,7 +6,7 @@ import {useSelector} from "react-redux";
 
 
 const MessageList = ({ getDate, onLike, editMessage}) => {
-    const messages = useSelector(state=> state.chat.messages);
+    const {messages,authUser} = useSelector(state=> state.chat);
     const setDataToDivider = (time) => {
         const d = new Date(time)
         const options = {
@@ -38,7 +38,7 @@ const MessageList = ({ getDate, onLike, editMessage}) => {
                                  key={el[0].id}>{setDataToDivider(el[0].editedAt || el[0].createdAt)}</div>
                             {
                                 el.map(message => {
-                                    if (message.hasOwnProperty("myOwn"))
+                                    if (message.userId === authUser.id)
                                         return <OwnMessage getDate={getDate}
                                                            editMessage={() => editMessage(message.id)}
                                                            message={message}

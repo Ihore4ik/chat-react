@@ -5,7 +5,7 @@ import Preloader from "../preloader/Preloader";
 import MessageInput from "../messageInput/MessageInput";
 import styles from "./Chat.module.css";
 import {useDispatch, useSelector} from "react-redux";
-import {createMessage, fetchMessages} from "../../redux/chatSlice";
+import { fetchMessages, fetchOwnMessage} from "../../redux/chatSlice";
 import Modal from "../modal/Modal";
 
 const Chat = ({url}) => {
@@ -24,7 +24,17 @@ const Chat = ({url}) => {
     const handleCreateMessage = (event) => {
         event.preventDefault();
         if (inputValue.trim()) {
-            dispatch(createMessage(inputValue));
+            const message = {
+                "id": Date.now(),
+                "userId": "Me1990",
+                "myOwn": true,
+                "user": "Me",
+                "text": inputValue,
+                "createdAt": new Date().toISOString(),
+                "editedAt": "",
+                "liked": false
+            }
+            dispatch(fetchOwnMessage({token,message}));
         }
         setInputValue('');
     };
@@ -57,9 +67,8 @@ const Chat = ({url}) => {
                         {error && <h2 className={styles.error}>An error occured: {error}</h2>}
                         <MessageList getDate={getDate}
                                      onLike={onLike}/>
-
                         <MessageInput value={inputValue}
-                                      createMessage={handleCreateMessage}
+                                      createMessage={(event)=>handleCreateMessage(event)}
                                       setInputValue={setInputValue}/>
                     </main>
                     <Modal/>
